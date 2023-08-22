@@ -12,23 +12,22 @@ function Messenger(props) {
         style={{
           display: "flex",
           marginBottom: "2px",
-          marginTop: "2px",
+          marginTop: "5px",
           flexFlow: "row",
           border:'0px',
-          justifyContent: props.item.isUser ? "right" : "left",
+          justifyContent: props.item.from == 'user' ? "right" : "left",
         }}
       >
-        {!props.item.isUser && (
+        {props.item.from == 'bot' && (
           <Avatar sx={{ mr: 1, bgcolor: "primary.main" }}>
             <img src={avatar} alt="Chatbot avatar" width={32} />
           </Avatar>
         )}
-        <Card style={{border:'0px'}}>{props.item.content}</Card>
+        <Card style={{border:'0px', marginTop: "5px", marginBottom: "5px"}}>{props.item.content}</Card>
       </Card>
     </>
   );
 }
 
-// {props.item.isUser ? (<><Card.Text style={{float:'right'}}>{props.item.content} </Card.Text></>): (<></>)}
 
 export default Messenger;

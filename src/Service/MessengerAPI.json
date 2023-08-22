@@ -2,6 +2,9 @@
   "questions": [
     { "question": "What is your name", "answer": "RoboBob" },
     { "question": "2+2", "answer": "4" },
-    { "question": "2*10.5+1", "answer": "22" }
+    { "question": "2*10.5+1", "answer": "22" },
+    { "question": "5*5", "answer": "25" },
+    { "question": "10/10", "answer": "1" },
+    { "question": "Who made you?", "answer": "Varsha" }
   ]
 }

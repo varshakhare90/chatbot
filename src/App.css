@@ -8,7 +8,24 @@
   pointer-events: none;
 }
 
+.historyClass{
+  max-width: 387px !important;
 
+}
+/* .scrollChat{
+  height: 350px !important;
+  overflow : scroll;
+  overflow-X: hidden;
+} */
+.card-header{
+  border-bottom: 1px solid grey !important;
+}
+.listHistory{
+  margin-top: 5px;
+  cursor: pointer;
+  background: grey !important;
+  color: white !important;
+}
 
 .App-header {
   /* display: flex;
