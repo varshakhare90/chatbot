@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 
 import { Avatar } from "@mui/material";
-import avatar from "../assets/bot.png";
+import avatar from "../assets/bot.png";  // Adding all the modules
 
-function Messenger(props) {
+function Messenger(props) { // getting the props and populating the data into the component
  // console.log("props", props);
   return (
     <>

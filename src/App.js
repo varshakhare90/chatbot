@@ -1,32 +1,32 @@
 import React, {  useState } from "react";
 //import logo from './logo.png';
 import "./App.css";
-import Messenger from "./Component/Messenger";
-import { Row, Col, CardGroup, ListGroupItem } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
-import axios from "axios";
+import Messenger from "./Component/Messenger"; // Importing the component Messenger
+import { Row, Col, CardGroup, ListGroupItem } from "react-bootstrap"; // Importing rows, cols from react bootstrap
+import Button from "react-bootstrap/Button"; 
+import Card from "react-bootstrap/Card"; // Imported card from react bootstrap
+import Form from "react-bootstrap/Form"; // Imported form from react bootstrap
+import Container from "react-bootstrap/Container"; // Imported container from react bootstrap
+import ListGroup from "react-bootstrap/ListGroup"; // Imported listgroup from react bootstrap
+import axios from "axios"; // Impoted all modules
 
 function App() {
-  const [messageInput, setMessageInput] = useState("");
+  const [messageInput, setMessageInput] = useState(""); // Initialising the text input box.
   const [messages, setMessages] = useState([
     { content: "Hi there!! You can ask me question", from: "bot" },
-  ]);
-  const [userQuesAns, setUserQuesAns] = useState([]);
-  const [questions, setQuestions] = useState();
-  const [historyFlag, setHistoryFlag] = useState(false);
-  const [historyQues, setHistoryQues] = useState([]);
+  ]); // Initialising the message array. Responses are from bot and users.
+  const [userQuesAns, setUserQuesAns] = useState([]); // Setting an array consisting of list of questions and answers for the history access.
+  const [questions, setQuestions] = useState(); // Assiging this array with the data being received from the API. Right now the API is hard coded.
+  const [historyFlag, setHistoryFlag] = useState(false); // Flag used to show the previous questions and answers.
+  const [historyQues, setHistoryQues] = useState([]); // Initialising the array which will contain previous asked questions.
   
-
-  const sendMessage = (content, from) => {
+  
+  const sendMessage = (content, from) => {  // Function is called when the message is sent fro user.
     // add the message to the state
 
     setHistoryFlag(false);
 
-    setMessages((prevState) => [
+    setMessages((prevState) => [ // Assiging the array set with the input got from user
       ...prevState,
       {
         content: content,
@@ -34,7 +34,7 @@ function App() {
       },
     ]);
 
-    axios.get("MessengerAPI.json").then((res) => {
+    axios.get("MessengerAPI.json").then((res) => { // Axios http call to get the predefined questions all at once.
       //  console.log('res',res);
       setQuestions(res.data.questions);
 
@@ -44,25 +44,21 @@ function App() {
         } else {
           return "";
         }
-      });
+      }); // filtering the question being asked by the user with the predefined questions
 
-      let userQuesAnsTemp = res.data.questions.filter((item, index) => {
+      let userQuesAnsTemp = res.data.questions.filter((item, index) => { 
         if (item.question == messageInput) {
           return item;
         } else {
           return;
         }
-      });
+      });  // Filtering the question and getting the array with selected questions and answers
 
-      console.log("matched", matched);
-
-      //     console.log('userQuesAnsTemp', userQuesAnsTemp);
-
-      let gg = userQuesAns.filter(
+      let tempQnA = userQuesAns.filter(
         (e) => e.content == userQuesAnsTemp[0]?.question
       );
-      if (gg.length == 0) {
-        if (userQuesAnsTemp.length) {
+      if (tempQnA.length == 0) {
+        if (userQuesAnsTemp.length) { // Assiging the array with questions and ansers from user and bot 
           setUserQuesAns((prevState) => [
             ...prevState,
             {
@@ -77,17 +73,17 @@ function App() {
         }
       }
 
-      if (matched.length == 0) {
-        setMessages((prevState) => [
+      if (matched.length == 0) { // Checking if the question being asked matches the predefined set of question
+        setMessages((prevState) => [ 
           ...prevState,
           {
             content:
               "Oops, I don't understand. Please ask me a different question",
             from: "bot",
           },
-        ]);
+        ]); // If any question being asked is out of the predefined set of questions then the bot answers to ask a diff question
       } else {
-        setMessages((prevState) => [
+        setMessages((prevState) => [ // Else assign the answer
           ...prevState,
           {
             content: matched[0].answer,
@@ -99,7 +95,7 @@ function App() {
   };
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => { // Function being called on click of send button
     event.preventDefault();
 
     sendMessage(messageInput, "user");
@@ -109,19 +105,20 @@ function App() {
 
 
 
-  const handlePreviousQues = (bb) => {
+  const handlePreviousQues = (val) => { // The area which has history questions are clickable. Function being called on click of each question which gives us the answer.
     setHistoryFlag(true);
     let temp = [];
     setHistoryQues([]);
-    let matched = questions.filter((item, index) => {
-      if (item.question == bb) {
+
+    let matched = questions.filter((item, index) => { // filtering the question being clicked with predefined questions.
+      if (item.question == val) {
         return item;
       } else {
         return "";
       }
     });
 
-    if (matched.length == 0) {
+    if (matched.length == 0) { // Assiging the array with answers from bot.
       let obj = {
         content: "Oops, I don't understand. Please ask me a different question",
         from: "bot",
@@ -146,7 +143,7 @@ function App() {
 
 
 
-  return (
+  return ( // rendering part
     <>
       <Container>
         <CardGroup>
@@ -231,3 +228,5 @@ function App() {
 }
 
 export default App;
+
+
